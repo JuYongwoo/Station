@@ -17,8 +17,5 @@ public:
 protected:
     virtual void BeginPlay() override;
 
-private:
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Mesh, meta = (AllowPrivateAccess = "true"))
-    USkeletalMeshComponent* GhostMesh;
 
 };

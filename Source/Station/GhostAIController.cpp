@@ -1,5 +1,7 @@
 #include "GhostAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 AGhostAIController::AGhostAIController()
@@ -29,10 +31,20 @@ void AGhostAIController::Tick(float DeltaSeconds)
 
     if (!BlackboardComp) return;
 
+    APawn* ControlledPawn = GetPawn();
+    if (ControlledPawn)
+    {
+        ACharacter* GhostCharacter = Cast<ACharacter>(ControlledPawn);
+        if (GhostCharacter)
+        {
+            GhostCharacter->GetCharacterMovement()->MaxWalkSpeed = 50.f;
+        }
+    }
+
+    // 기존 추적 로직
     APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
     if (PlayerPawn)
     {
-        BlackboardComp->SetValueAsObject(TargetKey, PlayerPawn);
-        MoveToActor(PlayerPawn, 5.0f); // 5cm까지 접근
+        MoveToActor(PlayerPawn, 5.f);
     }
 }

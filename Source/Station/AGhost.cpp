@@ -1,35 +1,36 @@
 #include "AGhost.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "GhostAIController.h" // 너가 따로 만든 AIController 있다면 이걸로
+#include "GhostAIController.h"
 
 AAGhost::AAGhost()
 {
     PrimaryActorTick.bCanEverTick = true;
 
-    // AIController 설정
-    AIControllerClass = AGhostAIController::StaticClass(); // ← 없으면 AAIController 로 임시 설정 가능
+    bUseControllerRotationYaw = false;
+
+    GetCharacterMovement()->bUseControllerDesiredRotation = true;
+    GetCharacterMovement()->RotationRate = FRotator(0.f, 720.f, 0.f);
+
+    AIControllerClass = AGhostAIController::StaticClass();
     AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
-    // 유령용 SkeletalMeshComponent 추가
-    GhostMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("GhostMesh"));
-    GhostMesh->SetupAttachment(RootComponent);
-    GhostMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-    GhostMesh->SetRelativeLocation(FVector(0.f, 0.f, -90.f)); // 캡슐 위치 보정
+    // 반드시 캡슐에 부착
+    GetMesh()->SetupAttachment(GetCapsuleComponent());
 
-    // (선택) 걷는 속도 약간 느리게 유령 느낌
-    GetCharacterMovement()->MaxWalkSpeed = 200.f;
+    GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+    GetMesh()->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
+    GetMesh()->SetRelativeLocation(FVector(0.f, 0.f, -83.f));
 
-    // 메쉬 리소스 지정 (에디터에서 직접 지정하는 걸 더 권장)
-    static ConstructorHelpers::FObjectFinder<USkeletalMesh> MeshAsset(TEXT("/Game/YourPath/SK_Ghost.SK_Ghost"));
-    if (MeshAsset.Succeeded())
-    {
-        GhostMesh->SetSkeletalMesh(MeshAsset.Object);
-    }
+    GetCharacterMovement()->MaxWalkSpeed = 10.f;
 }
+
 
 void AAGhost::BeginPlay()
 {
     Super::BeginPlay();
+    UE_LOG(LogTemp, Warning, TEXT("Ghost MaxWalkSpeed: %f"), GetCharacterMovement()->MaxWalkSpeed);
+
 }
