@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"changelists": [
+		{
+			"guid": "00000000000000000000000000000000",
+			"description": "Default Uncontrolled Changelist",
+			"files": [
+				"C:/Users/user/Documents/Unreal Projects/Station/Content/FirstPerson/Blueprints/BP_ASTCharacter.uasset",
+				"C:/Users/user/Documents/Unreal Projects/Station/Content/FirstPerson/Blueprints/BP_FirstPersonGameMode.uasset",
+				"C:/Users/user/Documents/Unreal Projects/Station/Content/AI/BB_GhostAI.uasset",
+				"C:/Users/user/Documents/Unreal Projects/Station/Content/AI/BT_GhostAI.uasset",
+				"C:/Users/user/Documents/Unreal Projects/Station/Content/FirstPerson/Blueprints/BP_Ghost.uasset",
+				"C:/Users/user/Documents/Unreal Projects/Station/Content/__ExternalActors__/FirstPerson/Maps/FirstPersonMap/D/EM/E9QT12Y18XX6KO26282JXN.uasset",
+				"C:/Users/user/Documents/Unreal Projects/Station/Content/__ExternalActors__/FirstPerson/Maps/FirstPersonMap/8/1F/7YPOB6SMRHIW805XB4KXZP.uasset",
+				"C:/Users/user/Documents/Unreal Projects/Station/Content/__ExternalActors__/FirstPerson/Maps/FirstPersonMap/3/JH/31H7OF63JQ0303D8JHBHEA.uasset",
+				"C:/Users/user/Documents/Unreal Projects/Station/Content/__ExternalActors__/FirstPerson/Maps/FirstPersonMap/C/CI/UPTYP8B2PLXAUA9QFSVEXZ.uasset",
+				"C:/Users/user/Documents/Unreal Projects/Station/Content/AI/BTTask_FindPlayer.uasset",
+				"C:/Users/user/Documents/Unreal Projects/Station/Content/AI/BTService_FindPlayer.uasset"
+			]
+		}
+	]
+}

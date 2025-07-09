@@ -1,3 +1,31 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:73485183aac9dbecb29ed64b71c7bb00aeaeb2887608e17971bc1e83c4b1d878
-size 634
+// Copyright Epic Games, Inc. All Rights Reserved.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/PlayerController.h"
+#include "StationPlayerController.generated.h"
+
+class UInputMappingContext;
+
+/**
+ *
+ */
+UCLASS()
+class STATION_API AStationPlayerController : public APlayerController
+{
+	GENERATED_BODY()
+	
+protected:
+
+	/** Input Mapping Context to be used for player input */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	UInputMappingContext* InputMappingContext;
+
+	// Begin Actor interface
+protected:
+
+	virtual void BeginPlay() override;
+
+	// End Actor interface
+};

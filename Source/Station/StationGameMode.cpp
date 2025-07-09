@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d1ddf0c56a95215b8511c2cccb51819f7c87af64695577e7cf795b5cb8fcb858
-size 457
+// Copyright Epic Games, Inc. All Rights Reserved.
+
+#include "StationGameMode.h"
+#include "StationCharacter.h"
+#include "UObject/ConstructorHelpers.h"
+
+AStationGameMode::AStationGameMode()
+	: Super()
+{
+	// set default pawn class to our Blueprinted character
+	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/FirstPerson/Blueprints/BP_FirstPersonCharacter"));
+	DefaultPawnClass = PlayerPawnClassFinder.Class;
+
+}

@@ -1,3 +1,19 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7f30fd1ca7f3483b744b89c975b0913e854d2bb217159cea2333c567b5ced53a
-size 311
+// Copyright Epic Games, Inc. All Rights Reserved.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/GameModeBase.h"
+#include "StationGameMode.generated.h"
+
+UCLASS(minimalapi)
+class AStationGameMode : public AGameModeBase
+{
+	GENERATED_BODY()
+
+public:
+	AStationGameMode();
+};
+
+
+
