@@ -7,6 +7,7 @@
 #include "Logging/LogMacros.h"
 #include "StationCharacter.generated.h"
 
+class UInteractionUIManager;
 class UInputComponent;
 class USkeletalMeshComponent;
 class UCameraComponent;
@@ -46,9 +47,11 @@ public:
 
 protected:
 	virtual void BeginPlay();
+	virtual void Tick(float DeltaSeconds) override;
 
 public:
-		
+	void Interact();
+
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
@@ -82,6 +85,11 @@ public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
-
+	UPROPERTY()
+	AActor* CurrentFocusedActor;
+	UPROPERTY()
+	UInteractionUIManager* UIManager;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<UInteractionUIManager> UIManagerClass;
 };
 

@@ -10,6 +10,8 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "Engine/LocalPlayer.h"
+#include "IInteractable.h"
+#include "InteractionUIManager.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -39,6 +41,7 @@ AStationCharacter::AStationCharacter()
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
+
 }
 
 void AStationCharacter::BeginPlay()
@@ -53,6 +56,13 @@ void AStationCharacter::BeginPlay()
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
+	}
+
+	UIManager = CreateWidget<UInteractionUIManager>(GetWorld(), UIManagerClass);
+
+	if (UIManager) {
+		UIManager->AddToViewport();
+		UIManager->SetVisibility(ESlateVisibility::Hidden);
 	}
 
 }
@@ -115,4 +125,31 @@ void AStationCharacter::SetHasRifle(bool bNewHasRifle)
 bool AStationCharacter::GetHasRifle()
 {
 	return bHasRifle;
+}
+
+void AStationCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	FVector Start = FirstPersonCameraComponent->GetComponentLocation();
+	FVector End = Start + FirstPersonCameraComponent->GetForwardVector() * 500.0f;
+
+	FHitResult Hit;
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+
+	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
+	{
+		if (Hit.GetActor() && Hit.GetActor()->Implements<UInteractable>())
+		{
+			CurrentFocusedActor = Hit.GetActor();
+			FText Text = IInteractable::Execute_GetInteractionText(CurrentFocusedActor);
+			UIManager->ShowInteractionUI(Text);
+
+			return;
+		}
+	}
+
+	CurrentFocusedActor = nullptr;
+	UIManager->HideInteractionUI();
 }
